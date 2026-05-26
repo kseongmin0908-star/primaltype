@@ -9,6 +9,8 @@
     'use strict';
 
     var apiBase = (window.RANKING_API_BASE || '');
+    // 사진 로드 실패 시 보여줄 기본 프로필 아바타 (일반적인 사람 실루엣)
+    var DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' fill='%233a2c1c'/%3E%3Ccircle cx='24' cy='19' r='8' fill='%23a8967f'/%3E%3Cpath d='M9 41c1-8 7-12 15-12s14 4 15 12z' fill='%23a8967f'/%3E%3C/svg%3E";
     var available = false;        // 백엔드 사용 가능 여부
     var currentResult = null;     // main.js 분석 결과
     var currentCanvas = null;     // 리사이즈된 사진 캔버스
@@ -212,13 +214,23 @@
         el.innerHTML = rows.map(function (r, i) {
             var rank = medals[i] || ('<span class="rank-num">' + (i + 1) + '</span>');
             var safeName = escapeHtml(r.nickname);
+            // 사진 URL은 API 도메인 기준 절대경로로 (정적 사이트와 API 도메인이 다를 수 있음)
+            var photoUrl = r.photo ? (apiBase + r.photo) : DEFAULT_AVATAR;
             return '<li class="ranking-row ' + cat + '">' +
                 '<span class="ranking-rank">' + rank + '</span>' +
-                '<img class="ranking-photo" src="' + escapeAttr(r.photo) + '" alt="' + safeName + '" loading="lazy">' +
+                '<img class="ranking-photo" src="' + escapeAttr(photoUrl) + '" alt="' + safeName + '" loading="lazy">' +
                 '<span class="ranking-name">' + safeName + '</span>' +
                 '<span class="ranking-score">' + Number(r.score).toFixed(1) + '%</span>' +
                 '</li>';
         }).join('');
+        // 이미지 로드 실패 시 기본 프로필 아바타로 대체
+        el.querySelectorAll('.ranking-photo').forEach(function (img) {
+            img.addEventListener('error', function () {
+                if (this.dataset.fallback) return;
+                this.dataset.fallback = '1';
+                this.src = DEFAULT_AVATAR;
+            });
+        });
     }
 
     function escapeHtml(s) {

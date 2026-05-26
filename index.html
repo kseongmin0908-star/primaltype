@@ -151,15 +151,15 @@
                 "name": "업로드한 사진이 외부로 유출될 위험은 없나요?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "네, 완전히 안전합니다. 업로드된 사진은 사용자의 브라우저 내에서만 처리되며, 어떤 서버로도 전송되거나 저장되지 않습니다. 모든 AI 분석은 TensorFlow.js를 통해 사용자의 기기에서 직접 이루어집니다."
+                    "text": "사진 분석은 이용자의 브라우저 안에서만 이루어지며 서버로 전송되지 않습니다. 다만 주간 랭킹에 직접 등록하면 사진과 닉네임이 공개 랭킹에 표시되고 다음 주에 자동 삭제됩니다. 랭킹에 등록하지 않으면 사진은 저장되지 않습니다."
                 }
             },
             {
                 "@type": "Question",
-                "name": "원시력 테스트는 어떤 AI 기술을 사용하나요?",
+                "name": "주간 랭킹은 어떻게 참여하나요?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Google의 Teachable Machine으로 학습된 이미지 분류 모델을 사용합니다. 이 모델은 TensorFlow.js 위에서 동작하며, 웹 브라우저에서 직접 실행됩니다. 별도의 앱 설치나 서버 통신 없이 실시간으로 이미지 분석이 가능합니다."
+                    "text": "사진을 분석한 뒤 결과 화면의 '이번 주 랭킹에 도전하기' 버튼을 누르고 닉네임을 입력하면 됩니다. 원시인 랭킹과 현대인 랭킹으로 나뉘며, 매주 월요일에 초기화됩니다."
                 }
             },
             {
@@ -267,7 +267,7 @@
         <section id="hero" aria-label="소개 배너">
             <div class="hero-content">
                 <div class="hero-badge">10초만에 끝나는 AI 테스트</div>
-                <h2>네 안에 원시인이<br>살고 있다</h2>
+                <h2>셀카 한 장으로 하는<br>'나는 몇 퍼센트 원시인?' 테스트</h2>
                 <p class="last-updated">마지막 업데이트: <time datetime="2026-02-22">2026년 2월 22일</time></p>
                 <a href="#detector" class="hero-cta btn">지금 테스트하기</a>
             </div>
@@ -373,7 +373,7 @@
                 <div class="info-item">
                     <div class="info-icon">🔥</div>
                     <h3>2. AI 분석</h3>
-                    <p>Google Teachable Machine 기반 AI 모델이 당신의 사진을 실시간으로 분석합니다.</p>
+                    <p>머신러닝 AI 모델이 당신의 사진을 실시간으로 분석합니다.</p>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">🦴</div>
@@ -386,17 +386,18 @@
         <section id="about">
             <div class="about-content">
                 <h2>원시력 테스트란?</h2>
-                <p class="section-snippet">원시력 테스트란 Google Teachable Machine 기반 AI가 얼굴 사진을 분석하여 원시인/현대인 유사도를 퍼센트로 보여주는 무료 엔터테인먼트 웹 서비스입니다. 사진은 브라우저에서만 처리되어 개인정보가 외부로 전송되지 않습니다.</p>
+                <p class="section-snippet">셀카 한 장으로 내가 '원시인'에 가까운지 '현대인'에 가까운지 AI가 알려주는 무료 재미 테스트입니다.</p>
                 <div class="about-text">
-                    <p><strong>원시력 테스트</strong>는 AI 이미지 인식 기술을 활용한 재미있는 엔터테인먼트 웹 서비스입니다. 사용자가 업로드한 사진을 Google의 <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener noreferrer" class="source-link">Teachable Machine</a>으로 학습된 AI 모델이 분석하여, 얼굴 특징을 기반으로 "원시인"과 "현대인" 사이의 유사도를 퍼센트로 보여드립니다.</p>
-                    <p>물론 이 테스트는 <strong>100% 재미 목적</strong>으로 만들어졌습니다. 과학적 근거는 없지만, 친구들과 함께 결과를 공유하며 웃고 즐길 수 있는 가벼운 테스트입니다. 매번 다양한 결과 메시지가 랜덤으로 출력되어, 같은 사진으로도 다른 재미있는 설명을 받아볼 수 있습니다.</p>
+                    <p>사진을 올리면 AI가 얼굴 특징을 분석해 내 안의 <strong>원시인 지수</strong>를 퍼센트로 보여줍니다. 딱 10초면 끝나요!</p>
+                    <p><strong>100% 재미를 위한 테스트</strong>라 과학적 근거는 없어요. 친구들과 결과를 공유하고, 주간 랭킹에 도전하고, 원시인 타로로 오늘의 운세까지 즐겨보세요.</p>
                     <h3>주요 특징</h3>
                     <ul>
-                        <li><strong>완전한 개인정보 보호</strong> - 업로드된 사진은 브라우저에서만 처리되며, 어떤 서버로도 전송되지 않습니다.</li>
-                        <li><strong>실시간 AI 분석</strong> - <a href="https://www.tensorflow.org/js" target="_blank" rel="noopener noreferrer" class="source-link">TensorFlow.js</a> 기반으로 브라우저에서 직접 AI 분석이 이루어집니다.</li>
-                        <li><strong>다양한 결과 메시지</strong> - 30가지 이상의 유머러스한 결과 문구가 준비되어 있습니다.</li>
-                        <li><strong>간편한 공유</strong> - 카카오톡, 인스타그램 등으로 결과를 쉽게 공유할 수 있습니다.</li>
-                        <li><strong>결과 이미지 저장</strong> - 분석 결과를 예쁜 카드 이미지로 저장할 수 있습니다.</li>
+                        <li><strong>10초 AI 분석</strong> - 사진을 올리면 AI가 바로 원시인/현대인 유사도를 퍼센트로 보여줍니다.</li>
+                        <li><strong>주간 랭킹</strong> - 이번 주 가장 원시인다운(또는 현대인다운) 얼굴에 도전! 매주 월요일 초기화됩니다.</li>
+                        <li><strong>원시인 타로</strong> - 동굴 주술사의 오늘의 운세 타로를 무료로 즐길 수 있어요.</li>
+                        <li><strong>다양한 결과 메시지</strong> - 30가지 이상의 유머러스한 결과 문구가 랜덤으로 나옵니다.</li>
+                        <li><strong>개인정보 보호</strong> - 사진 분석은 내 브라우저 안에서만 이루어지고, 주간 랭킹에 직접 등록할 때만 사진이 저장됩니다.</li>
+                        <li><strong>간편한 공유·저장</strong> - 결과를 카드 이미지로 저장하거나 카카오톡·인스타그램으로 공유할 수 있어요.</li>
                     </ul>
                 </div>
             </div>
@@ -431,7 +432,7 @@
 
         <section id="faq">
             <h2>자주 묻는 질문</h2>
-            <p class="section-snippet">원시력 테스트의 안전성, 비용, 기술, 사용법에 대해 자주 묻는 질문과 답변을 정리했습니다.</p>
+            <p class="section-snippet">원시력 테스트의 안전성, 비용, 랭킹, 사용법에 대해 자주 묻는 질문과 답변을 정리했습니다.</p>
             <div class="faq-list">
                 <details class="faq-item">
                     <summary>원시력 테스트는 과학적으로 정확한 결과를 제공하나요?</summary>
@@ -439,11 +440,11 @@
                 </details>
                 <details class="faq-item">
                     <summary>업로드한 사진이 외부로 유출될 위험은 없나요?</summary>
-                    <p><strong>사진은 브라우저 내에서만 처리되므로 외부 유출 위험이 없습니다.</strong> 업로드된 사진은 어떤 서버로도 전송되거나 저장되지 않습니다. 모든 AI 분석은 TensorFlow.js를 통해 사용자의 기기에서 직접 이루어지며, 페이지를 닫으면 사진 데이터는 완전히 사라집니다.</p>
+                    <p><strong>사진 분석은 이용자의 브라우저 안에서만 이루어지며, 서버로 전송되지 않습니다.</strong> 다만 <strong>주간 랭킹에 직접 등록</strong>하면 사진과 닉네임이 공개 랭킹에 표시되고, 다음 주에 자동 삭제됩니다. 랭킹에 등록하지 않으면 사진은 어디에도 저장되지 않습니다.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>원시력 테스트는 어떤 AI 기술을 사용하나요?</summary>
-                    <p><strong>Google Teachable Machine으로 학습된 이미지 분류 모델을 사용합니다.</strong> 이 모델은 TensorFlow.js 위에서 동작하며, 웹 브라우저에서 직접 실행됩니다. 별도의 앱 설치나 서버 통신 없이 실시간으로 이미지 분석이 가능합니다.</p>
+                    <summary>주간 랭킹은 어떻게 참여하나요?</summary>
+                    <p><strong>사진을 분석한 뒤 결과 화면의 "🏆 이번 주 랭킹에 도전하기" 버튼을 누르고 닉네임을 입력하면 됩니다.</strong> 원시인 랭킹과 현대인 랭킹으로 나뉘며, 점수가 높을수록 상위에 노출됩니다. 랭킹은 매주 월요일에 초기화됩니다.</p>
                 </details>
                 <details class="faq-item">
                     <summary>스마트폰에서도 원시력 테스트를 사용할 수 있나요?</summary>
@@ -470,26 +471,11 @@
         <section id="disclaimer">
             <div class="disclaimer-content">
                 <p>본 서비스는 재미/오락 목적으로 제작되었으며 과학적 근거가 없습니다.</p>
-                <p>업로드된 사진은 브라우저 내에서만 처리되며, 서버에 저장되거나 전송되지 않습니다.</p>
-                <p>어떠한 개인정보도 수집·저장하지 않습니다.</p>
+                <p>사진 분석은 이용자의 브라우저 안에서 이루어집니다. 주간 랭킹에 직접 등록하는 경우에만 사진과 닉네임이 공개 랭킹에 저장되며, 다음 주에 자동 삭제됩니다.</p>
                 <p>본 서비스는 Google AdSense 광고를 게재하며, 광고 관련 쿠키 사용에 대한 자세한 내용은 <a href="/privacy" class="source-link">개인정보처리방침</a>을 참조하세요.</p>
             </div>
         </section>
 
-        <section id="ai-info" aria-label="AI 기술 소개">
-            <div class="about-content">
-                <h2>원시력 테스트에 사용된 AI 기술</h2>
-                <p class="section-snippet">원시력 테스트는 Google Teachable Machine과 TensorFlow.js 기반의 클라이언트 사이드 머신러닝 기술을 활용합니다.</p>
-                <div class="about-text">
-                    <h3>Google Teachable Machine이란?</h3>
-                    <p>Google Teachable Machine은 머신러닝 전문 지식 없이도 이미지, 소리, 자세를 학습시킬 수 있는 Google의 웹 기반 도구입니다. 원시력 테스트의 AI 모델은 이 플랫폼을 통해 학습되었으며, 이미지의 시각적 특징을 분류하는 방식으로 동작합니다.</p>
-                    <h3>TensorFlow.js 브라우저 추론</h3>
-                    <p>학습된 모델은 <a href="https://www.tensorflow.org/js" target="_blank" rel="noopener noreferrer" class="source-link">TensorFlow.js</a>를 통해 사용자의 웹 브라우저에서 직접 실행됩니다. 이는 사진이 서버로 전송될 필요가 없다는 것을 의미하며, 완전한 개인정보 보호와 함께 빠른 분석 속도를 제공합니다.</p>
-                    <h3>결과의 해석</h3>
-                    <p>AI 모델이 출력하는 "원시인 지수"는 모델이 이미지에서 감지한 특정 시각적 패턴의 확률값입니다. 이는 순수히 오락 목적의 수치이며, 실제 인류학적 분류나 과학적 측정과는 무관합니다. 같은 사진이라도 조명, 각도, 해상도에 따라 결과가 달라질 수 있습니다.</p>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer role="contentinfo">
