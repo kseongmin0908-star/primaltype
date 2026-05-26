@@ -553,29 +553,69 @@ fileInput.addEventListener('change', (e) => {
     if (file) handleFile(file);
 });
 
+function resizeImageToCanvas(img, maxDim = 800) {
+    let w = img.naturalWidth || img.width;
+    let h = img.naturalHeight || img.height;
+    if (w > maxDim || h > maxDim) {
+        const ratio = Math.min(maxDim / w, maxDim / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas;
+}
+
+let resizedCanvas = null;
+
 function handleFile(file) {
-    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
+    const MAX_SIZE = 20 * 1024 * 1024;
 
     if (file.size > MAX_SIZE) {
-        showToast('파일 크기가 너무 큽니다. 10MB 이하의 이미지를 사용해주세요.');
+        showToast('파일 크기가 너무 큽니다. 20MB 이하의 이미지를 사용해주세요.');
         return;
     }
-    if (!ALLOWED_TYPES.includes(file.type)) {
-        showToast('지원하지 않는 파일 형식입니다. JPG 또는 PNG 이미지를 사용해주세요.');
+    if (file.type && !file.type.startsWith('image/')) {
+        showToast('이미지 파일만 업로드할 수 있습니다.');
         return;
     }
+
+    analyzeBtn.classList.add('hidden');
+    retryBtn.classList.add('hidden');
+    resultContainer.classList.add('hidden');
+    resizedCanvas = null;
 
     const reader = new FileReader();
     reader.onload = (e) => {
-        previewImage.src = e.target.result;
-        previewImage.classList.remove('hidden');
-        uploadPlaceholder.classList.add('hidden');
-        analyzeBtn.classList.remove('hidden');
-        retryBtn.classList.add('hidden');
-        resultContainer.classList.add('hidden');
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            resizedCanvas = resizeImageToCanvas(tempImg);
+            previewImage.src = resizedCanvas.toDataURL('image/jpeg', 0.9);
+            previewImage.classList.remove('hidden');
+            uploadPlaceholder.classList.add('hidden');
+            analyzeBtn.classList.remove('hidden');
+        };
+        tempImg.onerror = () => {
+            showToast('이미지를 읽을 수 없습니다. 다른 사진을 사용해주세요.');
+        };
+        tempImg.src = e.target.result;
+    };
+    reader.onerror = () => {
+        showToast('파일을 읽는 데 실패했습니다. 다시 시도해주세요.');
     };
     reader.readAsDataURL(file);
+}
+
+// ── Timeout helper ──
+function withTimeout(promise, ms, message) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(message || 'timeout')), ms);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
 // ── Analyze ──
@@ -587,10 +627,19 @@ analyzeBtn.addEventListener('click', async () => {
         if (!model) {
             const modelURL = MODEL_URL + "model.json";
             const metadataURL = MODEL_URL + "metadata.json";
-            model = await tmImage.load(modelURL, metadataURL);
+            model = await withTimeout(
+                tmImage.load(modelURL, metadataURL),
+                20000,
+                'AI 모델을 불러오지 못했습니다. 네트워크 연결을 확인해주세요.'
+            );
         }
 
-        const predictions = await model.predict(previewImage);
+        const predictTarget = resizedCanvas || previewImage;
+        const predictions = await withTimeout(
+            model.predict(predictTarget),
+            15000,
+            '이미지 분석이 지연되고 있습니다. 다른 사진으로 다시 시도해주세요.'
+        );
 
         // Build bars
         labelContainer.innerHTML = '';
@@ -648,11 +697,16 @@ analyzeBtn.addEventListener('click', async () => {
         loading.classList.add('hidden');
         resultContainer.classList.remove('hidden');
         retryBtn.classList.remove('hidden');
+
+        // 랭킹 모듈에 분석 결과 전달 (ranking.js)
+        if (typeof window.onAnalysisComplete === 'function') {
+            window.onAnalysisComplete(lastResult, resizedCanvas);
+        }
     } catch (err) {
         loading.classList.add('hidden');
         analyzeBtn.classList.remove('hidden');
         console.error('Analysis error:', err);
-        alert('분석에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        showToast(err && err.message ? err.message : '분석에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
 });
 
@@ -666,6 +720,9 @@ retryBtn.addEventListener('click', () => {
     retryBtn.classList.add('hidden');
     resultContainer.classList.add('hidden');
     lastResult = null;
+    resizedCanvas = null;
+    var rankBtn = document.getElementById('ranking-submit-btn');
+    if (rankBtn) rankBtn.classList.add('hidden');
 });
 
 

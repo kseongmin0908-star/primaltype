@@ -1,7 +1,43 @@
 {
+  // ──────────────────────────────────────────────────────────────
+  // Cloudflare Workers 설정 (정적 사이트 + 주간 랭킹 API + 자동삭제 크론)
+  //
+  // 최초 1회 설정 (터미널에서):
+  //   1) npm i -g wrangler && wrangler login
+  //   2) wrangler d1 create primal-rankings
+  //      → 출력된 database_id를 아래 d1_databases.database_id 에 붙여넣기
+  //   3) wrangler r2 bucket create primal-ranking-photos
+  //   4) wrangler d1 execute primal-rankings --remote --file=./schema.sql
+  //   5) wrangler deploy
+  //
+  // 로컬 테스트:  wrangler dev   (D1/R2 로컬 에뮬레이션)
+  // ──────────────────────────────────────────────────────────────
   "name": "cavemanify1",
+  "main": "worker.js",
   "compatibility_date": "2026-02-15",
+
   "assets": {
-    "directory": "./"
+    "directory": "./",
+    "binding": "ASSETS"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "primal-rankings",
+      "database_id": "PASTE_YOUR_D1_DATABASE_ID_HERE"
+    }
+  ],
+
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS",
+      "bucket_name": "primal-ranking-photos"
+    }
+  ],
+
+  "triggers": {
+    // 매주 월요일 00:05 UTC = 월요일 09:05 KST 에 지난 주 랭킹/사진 자동 삭제
+    "crons": ["5 0 * * 1"]
   }
 }
