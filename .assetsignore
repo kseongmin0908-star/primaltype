@@ -1,0 +1,19 @@
+# 정적 자산으로 공개되면 안 되는 내부 파일 (Cloudflare Workers Assets 제외 목록)
+.git
+.gitignore
+.idx
+.vscode
+.claude
+.wrangler
+node_modules
+worker.js
+wrangler.jsonc
+wrangler.dev.jsonc
+schema.sql
+.assetsignore
+.firebaserc
+firebase.json
+package.json
+package-lock.json
+blueprint.md
+GEMINI.md
