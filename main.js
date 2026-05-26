@@ -736,4 +736,23 @@ retryBtn.addEventListener('click', () => {
     if (rankBtn) rankBtn.classList.add('hidden');
 });
 
+// ── 스크롤 시 등장하는 모션 (.reveal) ──
+(function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in'); });
+        return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            if (en.isIntersecting) {
+                en.target.classList.add('in');
+                io.unobserve(en.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    els.forEach(function (el) { io.observe(el); });
+})();
+
 

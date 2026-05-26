@@ -759,6 +759,70 @@ header {
     background: var(--accent);
 }
 
+/* ── About 주요 특징 카드 ── */
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 30px;
+}
+.feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 24px 18px;
+    text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 24px var(--accent-glow);
+}
+.feature-emoji {
+    font-size: 2.4em;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.feature-card:hover .feature-emoji { animation: featureBounce 0.6s ease; }
+@keyframes featureBounce {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    30% { transform: translateY(-9px) rotate(-7deg); }
+    60% { transform: translateY(0) rotate(5deg); }
+}
+.feature-card h3 {
+    font-size: 1.02em;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+.feature-card p {
+    font-size: 0.84em;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+/* ── 스크롤 등장 모션 ── */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+}
+.about-features .reveal:nth-child(2) { transition-delay: 0.07s; }
+.about-features .reveal:nth-child(3) { transition-delay: 0.14s; }
+.about-features .reveal:nth-child(4) { transition-delay: 0.21s; }
+.about-features .reveal:nth-child(5) { transition-delay: 0.28s; }
+.about-features .reveal:nth-child(6) { transition-delay: 0.35s; }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .feature-card:hover .feature-emoji { animation: none; }
+}
+
 /* ── Tips Section ── */
 #tips {
     padding: 80px 40px;
@@ -1127,6 +1191,9 @@ footer {
     #about { padding: 50px 16px; }
     #about h2 { font-size: 1.6em; }
     .about-text p { font-size: 0.9em; }
+    .about-features { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .feature-card { padding: 18px 12px; }
+    .feature-emoji { font-size: 2em; }
 
     #tips { padding: 50px 16px; }
     #tips h2 { font-size: 1.6em; }
