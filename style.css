@@ -1359,9 +1359,9 @@ footer {
 }
 
 .ranking-photo {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 144px;
+    height: 144px;
+    border-radius: 16px;
     object-fit: cover;
     border: 2px solid var(--border-color);
     flex-shrink: 0;
@@ -1528,7 +1528,7 @@ footer {
     #ranking { padding: 50px 16px; }
     #ranking h2 { font-size: 1.6em; }
     .ranking-tab { padding: 9px 16px; font-size: 0.85em; }
-    .ranking-photo { width: 42px; height: 42px; }
+    .ranking-photo { width: 104px; height: 104px; }
     .ranking-name { font-size: 0.9em; }
 }
 
