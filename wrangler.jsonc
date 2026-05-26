@@ -16,6 +16,11 @@
   "main": "worker.js",
   "compatibility_date": "2026-02-15",
 
+  // primal-type.com 은 Pages가 서빙하므로, 랭킹 API는 api 서브도메인으로 분리
+  "routes": [
+    { "pattern": "api.primal-type.com", "custom_domain": true }
+  ],
+
   "assets": {
     "directory": "./",
     "binding": "ASSETS"
