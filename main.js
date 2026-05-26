@@ -631,6 +631,12 @@ function withTimeout(promise, ms, message) {
 
 // ── Analyze ──
 analyzeBtn.addEventListener('click', async () => {
+    // AI 라이브러리가 아직 로드되지 않았으면(특히 모바일 느린 네트워크) 크래시 대신 안내
+    if (typeof tmImage === 'undefined' || typeof tf === 'undefined') {
+        showToast('AI를 불러오는 중이에요. 잠시 후 다시 눌러주세요. 🦣');
+        return;
+    }
+
     analyzeBtn.classList.add('hidden');
     loading.classList.remove('hidden');
 
