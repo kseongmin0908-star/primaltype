@@ -424,8 +424,10 @@ function initShareSheet() {
     document.getElementById('share-kakao').addEventListener('click', function() {
         closeShareSheet();
 
-        // 1순위: Kakao SDK 피드 카드 공유 (콘솔 도메인 등록 완료 — 앱 1388141)
-        if (kakaoReady && window.Kakao && Kakao.Share) {
+        // 데스크톱: Kakao SDK 피드 카드 공유 (정상 동작 확인됨)
+        // 모바일: sendDefault가 4002 나는 카카오 이슈가 있어 SDK를 건너뛰고 아래 복사 방식 사용
+        var isMobileShare = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (!isMobileShare && kakaoReady && window.Kakao && Kakao.Share) {
             try {
                 Kakao.Share.sendDefault({
                     objectType: 'feed',
@@ -444,7 +446,7 @@ function initShareSheet() {
             } catch (e) { /* SDK 실패 시 아래 fallback */ }
         }
 
-        // 2순위(SDK 미준비 시): 링크 복사 + 카카오톡 열기
+        // 모바일(또는 SDK 미준비): 링크 복사 + 카카오톡 열기 (붙여넣으면 카드 자동 생성)
         copyToClipboardFallback(SHARE_URL);
         showToast('✅ 링크가 복사됐어요! 카카오톡 대화방에 붙여넣기 하세요');
         setTimeout(function() {
