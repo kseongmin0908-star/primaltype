@@ -89,20 +89,26 @@ header {
 
 .main-nav {
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
 }
 
 .main-nav a {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     text-decoration: none;
-    font-size: 0.85em;
-    font-weight: 500;
-    transition: color 0.3s;
+    font-size: 0.9em;
+    font-weight: 700;
+    padding: 7px 13px;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
     white-space: nowrap;
 }
 
-.main-nav a:hover {
-    color: var(--accent);
+.main-nav a:hover,
+.main-nav a:focus-visible {
+    color: var(--accent-light);
+    background: rgba(232, 98, 28, 0.14);
 }
 
 .logo h1 {
@@ -1138,8 +1144,8 @@ footer {
 @media (max-width: 768px) {
     header { padding: 10px 16px; }
     .header-inner { flex-direction: column; gap: 8px; }
-    .main-nav { gap: 14px; }
-    .main-nav a { font-size: 0.8em; }
+    .main-nav { gap: 3px; }
+    .main-nav a { font-size: 0.82em; padding: 6px 9px; }
     .logo h1 { font-size: 3em; }
     .logo-emoji { font-size: 1.2em; }
     .logo { gap: 8px; }
