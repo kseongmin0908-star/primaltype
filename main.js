@@ -106,6 +106,7 @@ function getResultMessage(predictions) {
 }
 
 let lastResult = null;
+let resultBlob = null;   // 결과 카드 이미지(미리 생성해 저장 클릭 시 즉시 사용)
 
 // ── Toast ──
 function showToast(message) {
@@ -302,69 +303,63 @@ function drawBar(ctx, barX, barY, barW, barH, label, value, color1, color2) {
     }
 }
 
-// ── Save Result (download image) ──
-async function saveResult() {
+// ── 결과 카드 미리 생성 (결과 표시 시 호출 → 저장 클릭 시 await 없이 즉시 사용) ──
+async function prepareResultCard() {
+    resultBlob = null;
+    if (!lastResult) return;
+    // 캔버스 글꼴이 깨지지 않도록 웹폰트 로딩 보장
+    try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
     const canvas = await generateResultCard();
     if (!canvas) return;
-
     try {
-        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-        const dataUrl = canvas.toDataURL('image/png');
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        resultBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    } catch (e) { resultBlob = null; }
+}
 
-        // 1) Mobile: try Web Share API (갤러리 저장 가능)
-        if (isMobile && navigator.share && navigator.canShare) {
-            try {
-                const file = new File([blob], 'caveman-result.png', { type: 'image/png' });
-                if (navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file] });
-                    return;
-                }
-            } catch (e) {
-                if (e.name === 'AbortError') return;
-                // Share failed, fall through
-            }
-        }
+// ── Save Result (클릭 핸들러: 동기 진입으로 모바일 사용자 제스처 유지) ──
+function saveResult() {
+    if (resultBlob) {
+        shareOrDownload(resultBlob);
+        return;
+    }
+    // 아직 카드 생성 전(드문 경우): 준비 후 다운로드 (이 경로는 모바일 공유 제스처가 만료될 수 있어 다운로드로 처리)
+    showToast('저장할 이미지를 준비 중이에요...');
+    prepareResultCard().then(() => {
+        if (resultBlob) downloadBlob(resultBlob);
+        else showToast('저장에 실패했습니다. 다시 시도해주세요.');
+    });
+}
 
-        // 2) Mobile fallback: 새 탭에 이미지를 열어서 길게 눌러 저장
-        if (isMobile) {
-            const newTab = window.open('', '_blank');
-            if (newTab) {
-                newTab.document.title = '결과 저장';
-                const metaCharset = newTab.document.createElement('meta');
-                metaCharset.setAttribute('charset', 'UTF-8');
-                newTab.document.head.appendChild(metaCharset);
-                const metaViewport = newTab.document.createElement('meta');
-                metaViewport.name = 'viewport';
-                metaViewport.content = 'width=device-width, initial-scale=1.0';
-                newTab.document.head.appendChild(metaViewport);
-                const style = newTab.document.createElement('style');
-                style.textContent = 'body{margin:0;background:#1A1008;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;}img{max-width:95%;height:auto;border-radius:12px;}p{color:#F5A623;margin-top:16px;font-size:15px;text-align:center;padding:0 20px;}';
-                newTab.document.head.appendChild(style);
-                const img = newTab.document.createElement('img');
-                img.src = dataUrl;
-                img.alt = '결과';
-                newTab.document.body.appendChild(img);
-                const p = newTab.document.createElement('p');
-                p.textContent = '📲 이미지를 길게 눌러서 갤러리에 저장하세요!';
-                newTab.document.body.appendChild(p);
-                newTab.document.close();
-                showToast('📲 이미지를 길게 눌러 저장하세요!');
+function shareOrDownload(blob) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // 모바일: Web Share로 이미지 공유/저장 (제스처 유지를 위해 동기 호출)
+    if (isMobile && navigator.canShare) {
+        try {
+            const file = new File([blob], 'wonsiryeok-result.png', { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+                navigator.share({ files: [file], title: '원시력 테스트 결과 🦣' }).catch((e) => {
+                    if (e && e.name === 'AbortError') return; // 사용자가 취소
+                    downloadBlob(blob);                        // 공유 실패 시 다운로드로
+                });
                 return;
             }
-        }
+        } catch (e) { /* 다운로드로 폴백 */ }
+    }
+    downloadBlob(blob);
+}
 
-        // 3) Desktop: 다운로드
+function downloadBlob(blob) {
+    try {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'caveman-result.png';
+        a.download = 'wonsiryeok-result.png';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         setTimeout(() => URL.revokeObjectURL(url), 1000);
-        showToast('📥 결과 이미지가 다운로드되었습니다!');
-    } catch (err) {
+        showToast('📥 결과 이미지가 저장되었어요!');
+    } catch (e) {
         showToast('저장에 실패했습니다. 다시 시도해주세요.');
     }
 }
@@ -735,6 +730,9 @@ analyzeBtn.addEventListener('click', async () => {
         resultContainer.classList.remove('hidden');
         retryBtn.classList.remove('hidden');
 
+        // 저장용 결과 카드를 미리 생성 (저장 클릭 시 즉시 공유/다운로드 → 모바일 제스처 유지)
+        prepareResultCard();
+
         // 랭킹 모듈에 분석 결과 전달 (ranking.js)
         if (typeof window.onAnalysisComplete === 'function') {
             window.onAnalysisComplete(lastResult, resizedCanvas);
@@ -757,6 +755,7 @@ retryBtn.addEventListener('click', () => {
     retryBtn.classList.add('hidden');
     resultContainer.classList.add('hidden');
     lastResult = null;
+    resultBlob = null;
     resizedCanvas = null;
     var rankBtn = document.getElementById('ranking-submit-btn');
     if (rankBtn) rankBtn.classList.add('hidden');
