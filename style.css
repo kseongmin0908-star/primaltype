@@ -1437,11 +1437,12 @@ footer {
 
 .ranking-name {
     flex: 1;
+    min-width: 0;
     font-weight: 700;
     font-size: 0.98em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
 }
 
 .ranking-score {
