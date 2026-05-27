@@ -545,14 +545,13 @@ shareLinkBtn.addEventListener('click', shareLink);
 // ── Upload Handling ──
 uploadArea.addEventListener('click', () => fileInput.click());
 
-// 히어로 CTA: 누르면 바로 사진 선택창 열기 (업로드 영역으로 스크롤 + 파일 선택)
+// 히어로 CTA: 누르면 업로드(디텍터) 영역으로 부드럽게 스크롤 (이동 버튼)
 const heroCta = document.querySelector('.hero-cta');
 if (heroCta) {
     heroCta.addEventListener('click', (e) => {
         e.preventDefault();
         const detector = document.getElementById('detector');
         if (detector) detector.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        fileInput.click();
     });
 }
 
