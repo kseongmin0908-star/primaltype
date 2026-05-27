@@ -424,11 +424,21 @@ function initShareSheet() {
     document.getElementById('share-kakao').addEventListener('click', function() {
         closeShareSheet();
 
-        // 1순위: Kakao SDK로 공유 (앱 키 등록 시)
+        // 1순위: Kakao SDK로 공유 (피드 템플릿을 직접 구성 — 긁어오기 의존 X)
         if (kakaoReady) {
             try {
-                Kakao.Share.sendScrap({
-                    requestUrl: SHARE_URL
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: '원시력 테스트 🦣',
+                        description: '나는 몇 퍼센트 원시인일까? 셀카 한 장으로 AI가 분석해줘!',
+                        imageUrl: 'https://primal-type.com/og-thumbnail.jpg',
+                        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
+                    },
+                    buttons: [{
+                        title: '나도 테스트하기',
+                        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
+                    }]
                 });
                 return;
             } catch (e) { /* SDK 실패 시 fallback */ }
