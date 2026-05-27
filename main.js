@@ -424,32 +424,13 @@ function initShareSheet() {
     document.getElementById('share-kakao').addEventListener('click', function() {
         closeShareSheet();
 
-        // 1순위: Kakao SDK로 공유 (피드 템플릿을 직접 구성 — 긁어오기 의존 X)
-        if (kakaoReady) {
-            try {
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: '원시력 테스트 🦣',
-                        description: '나는 몇 퍼센트 원시인일까? 셀카 한 장으로 AI가 분석해줘!',
-                        imageUrl: 'https://primal-type.com/og-thumbnail.jpg',
-                        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
-                    },
-                    buttons: [{
-                        title: '나도 테스트하기',
-                        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
-                    }]
-                });
-                return;
-            } catch (e) { /* SDK 실패 시 fallback */ }
-        }
-
-        // 2순위: 링크 복사 + 카카오톡 앱 열기
+        // 링크 복사 후 카카오톡 열기 — 대화방에 붙여넣으면 미리보기 카드가 자동 생성됨
+        // (카카오 SDK/콘솔 도메인 등록에 의존하지 않아 항상 동작)
         copyToClipboardFallback(SHARE_URL);
-        showToast('✅ 링크 복사 완료! 카카오톡에서 붙여넣기 하세요');
+        showToast('✅ 링크가 복사됐어요! 카카오톡 대화방에 붙여넣기 하세요');
         setTimeout(function() {
             location.href = 'kakaotalk://';
-        }, 300);
+        }, 400);
     });
 
     // ── 인스타그램 ──
