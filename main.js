@@ -446,12 +446,20 @@ function initShareSheet() {
             } catch (e) { /* SDK 실패 시 아래 fallback */ }
         }
 
-        // 모바일(또는 SDK 미준비): 링크 복사 + 카카오톡 열기 (붙여넣으면 카드 자동 생성)
-        copyToClipboardFallback(SHARE_URL);
-        showToast('✅ 링크가 복사됐어요! 카카오톡 대화방에 붙여넣기 하세요');
-        setTimeout(function() {
-            location.href = 'kakaotalk://';
-        }, 400);
+        // 모바일: 네이티브 공유 시트 → 카카오톡 선택 시 앱이 바로 열리고 카드까지 자동 생성
+        if (isMobileShare && navigator.share) {
+            navigator.share({
+                title: '원시력 테스트 🦣',
+                text: '나는 몇 퍼센트 원시인일까? 셀카로 AI 분석! 🦣',
+                url: SHARE_URL
+            }).catch(function () { /* 사용자가 취소한 경우 등 무시 */ });
+            return;
+        }
+
+        // 공유 API 미지원 시: 링크 복사 + 카카오톡 앱 열기 (제스처 내 즉시 실행)
+        var copied = copyToClipboardFallback(SHARE_URL);
+        showToast(copied ? '✅ 링크 복사됨! 카카오톡에 붙여넣기 하세요' : '카카오톡으로 공유해보세요!');
+        location.href = 'kakaotalk://';
     });
 
     // ── 인스타그램 ──
