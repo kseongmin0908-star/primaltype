@@ -37,6 +37,18 @@
         <priority>0.7</priority>
     </url>
     <url>
+        <loc>https://primal-type.com/caveman-food</loc>
+        <lastmod>2026-05-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://primal-type.com/caveman-fashion</loc>
+        <lastmod>2026-05-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://primal-type.com/primal-tips</loc>
         <lastmod>2026-05-28</lastmod>
         <changefreq>monthly</changefreq>
