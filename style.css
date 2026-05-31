@@ -150,6 +150,7 @@ header {
     font-family: 'Noto Sans KR', sans-serif;
     line-height: 1.35;
     letter-spacing: 0.04em;
+    word-break: keep-all;
     margin-bottom: 0.3em;
     background: linear-gradient(135deg, var(--accent), var(--accent-light), var(--accent-dark));
     -webkit-background-clip: text;

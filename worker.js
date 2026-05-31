@@ -13,6 +13,8 @@ const NICK_MAX = 20;
 const TOP_N = 10;
 
 // ── ISO 주차 (UTC) — 예: 2026-W22 ──
+// ISO 주차는 월요일 00:00 UTC(= 한국시간 월요일 오전 9시)에 바뀜.
+// getRankings가 "현재 주차" 행만 보여주므로, 랭킹은 매주 월요일 09:00 KST에 자동으로 초기화된다.
 function getWeekId(d = new Date()) {
     const date = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
     const dayNum = date.getUTCDay() || 7;
