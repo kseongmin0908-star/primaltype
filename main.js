@@ -148,34 +148,18 @@ function wrapText(ctx, text, maxWidth) {
 }
 
 function buildCanvas(userImg) {
-    const W = 600;
-    const pad = 40;
-    const contentW = W - pad * 2;
-
-    // Pre-calculate description height
-    const tmpCanvas = document.createElement('canvas');
-    const tmpCtx = tmpCanvas.getContext('2d');
-    tmpCtx.font = '15px "Noto Sans KR", sans-serif';
-    const descLines = wrapText(tmpCtx, lastResult.desc, contentW - 20);
-    const descBlockH = descLines.length * 24 + 28;
-
-    // Layout Y positions
-    const topTitleY = 42;
-    const imgSize = 280;
-    const imgY = 62;
-    const emojiY = imgY + imgSize + 50;
-    const titleY = emojiY + 48;
-    const descY = titleY + 24;
-    const barStartY = descY + descBlockH + 20;
-    const urlY = barStartY + 120;
-    const H = urlY + 30;
+    // 9:16 세로 카드 (저장/공유용) — 첨부 사진 & 설명글을 크게
+    const W = 720;
+    const H = 1280;                 // 9:16
+    const pad = 48;
+    const contentW = W - pad * 2;   // 624
 
     const canvas = document.createElement('canvas');
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext('2d');
 
-    // Background gradient
+    // 배경 그라데이션
     const bgGrad = ctx.createLinearGradient(0, 0, W, H);
     bgGrad.addColorStop(0, '#1A1008');
     bgGrad.addColorStop(0.5, '#2C2418');
@@ -183,23 +167,25 @@ function buildCanvas(userImg) {
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // Outer border
+    // 외곽 테두리
     ctx.strokeStyle = 'rgba(92, 61, 46, 0.5)';
-    ctx.lineWidth = 2;
-    roundRect(ctx, 2, 2, W - 4, H - 4, 14);
+    ctx.lineWidth = 3;
+    roundRect(ctx, 3, 3, W - 6, H - 6, 22);
     ctx.stroke();
 
-    // Top title
-    ctx.font = '18px "Noto Sans KR", sans-serif';
+    // 상단 타이틀
+    ctx.font = '26px "Noto Sans KR", sans-serif';
     ctx.fillStyle = '#8C7B6B';
     ctx.textAlign = 'center';
-    ctx.fillText('🦣 원시력 테스트', W / 2, topTitleY);
+    ctx.fillText('🦣 원시력 테스트', W / 2, 66);
 
-    // User image (large rounded rectangle)
+    // 첨부 사진 (크게: 기존 280 → 560)
+    const imgSize = 560;
     const imgX = (W - imgSize) / 2;
+    const imgY = 100;
     if (userImg) {
         ctx.save();
-        roundRect(ctx, imgX, imgY, imgSize, imgSize, 24);
+        roundRect(ctx, imgX, imgY, imgSize, imgSize, 28);
         ctx.clip();
         const scale = Math.max(imgSize / userImg.width, imgSize / userImg.height);
         const sw = imgSize / scale;
@@ -208,56 +194,82 @@ function buildCanvas(userImg) {
         const sy = (userImg.height - sh) / 2;
         ctx.drawImage(userImg, sx, sy, sw, sh, imgX, imgY, imgSize, imgSize);
         ctx.restore();
-        ctx.strokeStyle = 'rgba(92, 61, 46, 0.5)';
+        ctx.strokeStyle = 'rgba(92, 61, 46, 0.6)';
         ctx.lineWidth = 2;
-        roundRect(ctx, imgX, imgY, imgSize, imgSize, 24);
+        roundRect(ctx, imgX, imgY, imgSize, imgSize, 28);
         ctx.stroke();
     }
 
-    // Result emoji
-    ctx.font = '48px sans-serif';
+    // 결과 이모지
+    const emojiY = imgY + imgSize + 84;
+    ctx.font = '60px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(lastResult.emoji, W / 2, emojiY);
 
-    // Result title
+    // 결과 타이틀
     const titleColor = lastResult.type === 'primitive' ? '#E8621C'
         : lastResult.type === 'modern' ? '#4A7C59' : '#F5A623';
-    ctx.font = 'bold 26px "Noto Sans KR", sans-serif';
+    const titleY = emojiY + 54;
+    ctx.font = 'bold 36px "Noto Sans KR", sans-serif';
     ctx.fillStyle = titleColor;
     ctx.fillText(lastResult.title, W / 2, titleY);
 
-    // Description background box
+    // 하단 고정: 막대 그래프 + URL
+    const urlY = H - 52;
+    const barH = 24;
+    const barX = pad;
+    const barW = contentW;
+    const bar2Y = urlY - 80;
+    const bar1Y = bar2Y - 64;
+
+    // 설명 영역 (타이틀과 막대 사이를 채움)
+    const descTop = titleY + 28;
+    const descBottom = bar1Y - 44;
+    const descBoxH = Math.max(80, descBottom - descTop);
+
+    // 설명 텍스트 자동 맞춤 (크게: 기본 24px, 영역 넘치면 16px까지 축소)
+    let descFont = 24, lineH, descLines, blockH;
+    ctx.textAlign = 'left';
+    while (true) {
+        ctx.font = descFont + 'px "Noto Sans KR", sans-serif';
+        lineH = Math.round(descFont * 1.45);
+        descLines = wrapText(ctx, lastResult.desc, contentW - 36);
+        blockH = descLines.length * lineH + 36;
+        if (blockH <= descBoxH || descFont <= 16) break;
+        descFont -= 1;
+    }
+    blockH = Math.min(blockH, descBoxH);
+    const descY = descTop + Math.max(0, (descBoxH - blockH) / 2);
+
+    // 설명 박스
     const descBoxColor = lastResult.type === 'primitive' ? 'rgba(232, 98, 28, 0.1)'
         : lastResult.type === 'modern' ? 'rgba(74, 124, 89, 0.1)' : 'rgba(245, 166, 35, 0.08)';
     const descBorderColor = lastResult.type === 'primitive' ? 'rgba(232, 98, 28, 0.25)'
         : lastResult.type === 'modern' ? 'rgba(74, 124, 89, 0.25)' : 'rgba(245, 166, 35, 0.2)';
     ctx.fillStyle = descBoxColor;
-    roundRect(ctx, pad, descY, contentW, descBlockH, 12);
+    roundRect(ctx, pad, descY, contentW, blockH, 14);
     ctx.fill();
     ctx.strokeStyle = descBorderColor;
     ctx.lineWidth = 1;
-    roundRect(ctx, pad, descY, contentW, descBlockH, 12);
+    roundRect(ctx, pad, descY, contentW, blockH, 14);
     ctx.stroke();
 
-    // Description text
+    // 설명 텍스트 (크게)
     const descTextColor = lastResult.type === 'primitive' ? '#F5C5A3'
         : lastResult.type === 'modern' ? '#A3D4B5' : '#F2E8D5';
-    ctx.font = '15px "Noto Sans KR", sans-serif';
+    ctx.font = descFont + 'px "Noto Sans KR", sans-serif';
     ctx.fillStyle = descTextColor;
     ctx.textAlign = 'left';
     descLines.forEach((line, i) => {
-        ctx.fillText(line, pad + 10, descY + 22 + i * 24);
+        ctx.fillText(line, pad + 18, descY + 30 + i * lineH);
     });
 
-    // Percentage bars
-    const barX = 80;
-    const barW = 320;
-    const barH = 16;
-    drawBar(ctx, barX, barStartY, barW, barH, '🦴 원시인', lastResult.primitiveProb, '#E8621C', '#F5A623');
-    drawBar(ctx, barX, barStartY + 50, barW, barH, '💻 현대인', lastResult.modernProb, '#4A7C59', '#7BC89C');
+    // 막대 그래프
+    drawBar(ctx, barX, bar1Y, barW, barH, '🦴 원시인', lastResult.primitiveProb, '#E8621C', '#F5A623');
+    drawBar(ctx, barX, bar2Y, barW, barH, '💻 현대인', lastResult.modernProb, '#4A7C59', '#7BC89C');
 
-    // Site URL
-    ctx.font = '15px "Noto Sans KR", sans-serif';
+    // 사이트 URL
+    ctx.font = '20px "Noto Sans KR", sans-serif';
     ctx.fillStyle = '#F5A623';
     ctx.textAlign = 'center';
     ctx.fillText('🔗 primal-type.com', W / 2, urlY);
@@ -280,15 +292,16 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function drawBar(ctx, barX, barY, barW, barH, label, value, color1, color2) {
-    ctx.font = '14px "Noto Sans KR", sans-serif';
-    ctx.textAlign = 'left';
+    // 라벨(왼쪽) + 퍼센트(오른쪽) — 막대 위에
+    ctx.font = '20px "Noto Sans KR", sans-serif';
     ctx.fillStyle = '#F2E8D5';
-    ctx.fillText(label, barX, barY - 6);
+    ctx.textAlign = 'left';
+    ctx.fillText(label, barX, barY - 12);
     ctx.textAlign = 'right';
-    ctx.fillText(value.toFixed(1) + '%', barX + barW + 60, barY - 6);
+    ctx.fillText(value.toFixed(1) + '%', barX + barW, barY - 12);
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-    roundRect(ctx, barX, barY, barW, barH, 8);
+    roundRect(ctx, barX, barY, barW, barH, 10);
     ctx.fill();
 
     const fillW = Math.max(barW * (value / 100), 0);
@@ -297,7 +310,7 @@ function drawBar(ctx, barX, barY, barW, barH, label, value, color1, color2) {
         grad.addColorStop(0, color1);
         grad.addColorStop(1, color2);
         ctx.fillStyle = grad;
-        const r = Math.min(8, fillW / 2);
+        const r = Math.min(10, fillW / 2);
         roundRect(ctx, barX, barY, fillW, barH, r);
         ctx.fill();
     }
