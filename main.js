@@ -330,6 +330,38 @@ function saveResult() {
     });
 }
 
+// ── Download Result (이미지 저장 — 안드로이드·PC=바로 다운로드 / iOS=공유 시트의 "사진 저장") ──
+function downloadResult() {
+    if (resultBlob) {
+        saveImageToDevice(resultBlob);
+        return;
+    }
+    showToast('저장할 이미지를 준비 중이에요...');
+    prepareResultCard().then(() => {
+        if (resultBlob) downloadBlob(resultBlob);   // 제스처 만료된 비동기 경로 → 다운로드로
+        else showToast('저장에 실패했습니다. 다시 시도해주세요.');
+    });
+}
+
+// ── 디바이스 저장 라우팅: iOS는 공유 시트("사진 저장")가 유일하게 안정적, 그 외는 바로 다운로드 ──
+function saveImageToDevice(blob) {
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && 'ontouchend' in document);
+    if (isIOS && navigator.canShare) {
+        try {
+            var file = new File([blob], 'wonsiryeok-result.png', { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+                navigator.share({ files: [file], title: '원시력 테스트 결과 🦣' }).catch(function (e) {
+                    if (e && e.name === 'AbortError') return;   // 사용자가 취소
+                    downloadBlob(blob);                          // 공유 실패 시 다운로드 폴백
+                });
+                return;
+            }
+        } catch (e) { /* 다운로드로 폴백 */ }
+    }
+    downloadBlob(blob);   // 안드로이드·PC: 바로 다운로드
+}
+
 function shareOrDownload(blob) {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     // 모바일: Web Share로 이미지 공유/저장 (제스처 유지를 위해 동기 호출)
@@ -537,8 +569,10 @@ const resultDesc = document.getElementById('result-desc');
 const labelContainer = document.getElementById('label-container');
 const loading = document.getElementById('loading');
 const saveBtn = document.getElementById('save-btn');
+const downloadBtn = document.getElementById('download-btn');
 const shareLinkBtn = document.getElementById('share-link-btn');
 
+downloadBtn.addEventListener('click', downloadResult);
 saveBtn.addEventListener('click', saveResult);
 shareLinkBtn.addEventListener('click', shareLink);
 
