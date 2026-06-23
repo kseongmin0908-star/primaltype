@@ -221,6 +221,9 @@
                 '<img class="ranking-photo" src="' + escapeAttr(photoUrl) + '" alt="' + safeName + '" loading="lazy">' +
                 '<span class="ranking-name">' + safeName + '</span>' +
                 '<span class="ranking-score">' + Number(r.score).toFixed(1) + '%</span>' +
+                '<button class="ranking-report" type="button" title="이 사진 신고 / 삭제 요청" aria-label="이 게시물 신고 또는 삭제 요청"' +
+                ' data-name="' + escapeAttr(r.nickname) + '" data-cat="' + cat + '" data-score="' + Number(r.score).toFixed(1) + '"' +
+                ' style="margin-left:6px;background:none;border:0;cursor:pointer;font-size:0.95em;line-height:1;padding:4px;opacity:0.5">🚩</button>' +
                 '</li>';
         }).join('');
         // 이미지 로드 실패 시 기본 프로필 아바타로 대체
@@ -229,6 +232,22 @@
                 if (this.dataset.fallback) return;
                 this.dataset.fallback = '1';
                 this.src = DEFAULT_AVATAR;
+            });
+        });
+        // 신고/삭제 요청 → 운영자 메일 (본인·타인 무단 등록·부적절 게시물 신속 처리)
+        el.querySelectorAll('.ranking-report').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var nm = this.getAttribute('data-name') || '';
+                var ct = this.getAttribute('data-cat') === 'modern' ? '현대인' : '원시인';
+                var sc = this.getAttribute('data-score') || '';
+                var subject = '[원시력 랭킹 신고/삭제 요청]';
+                var body = '아래 주간 랭킹 게시물의 삭제/신고를 요청합니다.\n\n'
+                    + '· 분류: ' + ct + ' 랭킹\n'
+                    + '· 닉네임: ' + nm + '\n'
+                    + '· 점수: ' + sc + '%\n'
+                    + '· 사유(택1): 본인 사진 / 타인 무단 등록 / 부적절한 사진·닉네임 / 기타\n\n'
+                    + '(가능하면 화면 스크린샷을 첨부해 주세요. 확인하는 대로 신속히 처리하겠습니다.)';
+                window.location.href = 'mailto:kseongmin0908@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
             });
         });
     }
