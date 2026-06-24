@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
 
 :root {
-    --bg-primary: #1A1008;
-    --bg-secondary: #201408;
-    --bg-header: rgba(26, 16, 8, 0.92);
-    --bg-footer: #140C06;
-    --bg-card: #2C2418;
-    --text-primary: #F2E8D5;
-    --text-secondary: #8C7B6B;
-    --accent: #E8621C;
-    --accent-light: #F5A623;
-    --accent-dark: #C0392B;
-    --accent-glow: rgba(232, 98, 28, 0.25);
-    --border-color: rgba(92, 61, 46, 0.5);
-    --primitive-color: #E8621C;
-    --primitive-bg: rgba(232, 98, 28, 0.12);
+    --bg-primary: #F7F3EA;
+    --bg-secondary: #FBF8F0;
+    --bg-header: rgba(247, 243, 234, 0.86);
+    --bg-footer: #2F4A33;
+    --bg-card: #FFFFFF;
+    --text-primary: #2A3320;
+    --text-secondary: #6f6857;
+    --accent: #DC8A38;
+    --accent-light: #EBA655;
+    --accent-dark: #B5701F;
+    --accent-glow: rgba(220, 138, 56, 0.22);
+    --border-color: rgba(120, 100, 70, 0.20);
+    --primitive-color: #D8772E;
+    --primitive-bg: rgba(216, 119, 46, 0.12);
     --modern-color: #4A7C59;
     --modern-bg: rgba(74, 124, 89, 0.12);
 }
@@ -107,17 +107,17 @@ header {
 
 .main-nav a:hover,
 .main-nav a:focus-visible {
-    color: var(--accent-light);
-    background: rgba(232, 98, 28, 0.14);
+    color: var(--accent-dark);
+    background: rgba(220, 138, 56, 0.14);
 }
 
 .logo h1 {
     font-size: 3.5em;
     font-weight: 800;
     font-family: 'Noto Sans KR', sans-serif;
-    color: var(--accent);
+    color: #2F4A33;
     letter-spacing: 0.06em;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 20px rgba(232, 98, 28, 0.4);
+    text-shadow: 0 1px 2px rgba(80, 65, 35, 0.15);
 }
 
 .logo-emoji {
@@ -157,7 +157,7 @@ header {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: none;
-    filter: drop-shadow(0 0 20px rgba(232, 98, 28, 0.3));
+    filter: drop-shadow(0 0 20px rgba(220, 138, 56, 0.3));
 }
 
 .hero-desc {
@@ -251,7 +251,7 @@ header {
 .source-link {
     color: var(--accent);
     text-decoration: underline;
-    text-decoration-color: rgba(232, 98, 28, 0.4);
+    text-decoration-color: rgba(220, 138, 56, 0.4);
     text-underline-offset: 2px;
     transition: text-decoration-color 0.3s;
 }
@@ -263,9 +263,9 @@ header {
 /* ── Footer Developer Info ── */
 .footer-developer {
     font-size: 0.82em;
-    color: var(--text-secondary);
+    color: #9bb290;
     margin-bottom: 8px;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 /* ── Detector ── */
@@ -285,7 +285,7 @@ header {
     max-width: 480px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 60px var(--accent-glow);
+    box-shadow: 0 16px 44px rgba(80, 65, 35, 0.12);
 }
 
 /* ── Upload Area ── */
@@ -295,7 +295,7 @@ header {
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s;
-    background: rgba(232, 98, 28, 0.04);
+    background: rgba(220, 138, 56, 0.04);
     min-height: 250px;
     display: flex;
     align-items: center;
@@ -307,12 +307,12 @@ header {
 
 .upload-area:hover {
     border-color: var(--accent);
-    background: rgba(232, 98, 28, 0.08);
+    background: rgba(220, 138, 56, 0.08);
 }
 
 .upload-area.dragover {
     border-color: var(--accent-light);
-    background: rgba(232, 98, 28, 0.12);
+    background: rgba(220, 138, 56, 0.12);
     transform: scale(1.02);
 }
 
@@ -355,8 +355,8 @@ header {
 /* ── Buttons ── */
 .btn {
     display: inline-block;
-    background: linear-gradient(135deg, #E8621C, #C0392B);
-    color: #fff;
+    background: linear-gradient(135deg, #EBA655, #DC8A38);
+    color: #412905;
     padding: 16px 40px;
     border: none;
     border-radius: 14px;
@@ -461,14 +461,14 @@ header {
 
 .result-desc.primitive {
     background: var(--primitive-bg);
-    border: 1px solid rgba(232, 98, 28, 0.2);
-    color: #F5C5A3;
+    border: 1px solid rgba(216, 119, 46, 0.28);
+    color: #8a4a1c;
 }
 
 .result-desc.modern {
     background: var(--modern-bg);
-    border: 1px solid rgba(74, 124, 89, 0.2);
-    color: #A3D4B5;
+    border: 1px solid rgba(74, 124, 89, 0.30);
+    color: #2f5238;
 }
 
 
@@ -493,7 +493,7 @@ header {
 }
 
 .prediction-bar .bar-bg {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(120, 100, 70, 0.14);
     border-radius: 10px;
     height: 14px;
     overflow: hidden;
@@ -506,8 +506,8 @@ header {
 }
 
 .prediction-bar.primitive .bar-fill {
-    background: linear-gradient(90deg, #E8621C, #F5A623);
-    box-shadow: 0 0 12px rgba(232, 98, 28, 0.4);
+    background: linear-gradient(90deg, #D8772E, #EBA655);
+    box-shadow: 0 0 10px rgba(216, 119, 46, 0.3);
 }
 
 .prediction-bar.modern .bar-fill {
@@ -517,17 +517,17 @@ header {
 /* ── Save Button ── */
 .btn-save {
     margin-top: 24px;
-    background: linear-gradient(135deg, #E8621C, #F5A623, #C0392B);
+    background: linear-gradient(135deg, #EBA655, #DC8A38, #B5701F);
     background-size: 200% 200%;
     animation: gradientShift 3s ease infinite;
     width: 100%;
     font-size: 1.1em;
-    box-shadow: 0 6px 30px rgba(232, 98, 28, 0.3);
+    box-shadow: 0 8px 26px rgba(170, 110, 35, 0.32);
 }
 
 .btn-save:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 10px 40px rgba(232, 98, 28, 0.4);
+    box-shadow: 0 12px 34px rgba(170, 110, 35, 0.42);
 }
 
 /* ── Share Link Button ── */
@@ -644,7 +644,7 @@ header {
     border: 1px solid var(--border-color);
     font-size: 0.95em;
     font-family: 'Noto Sans KR', sans-serif;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 34px rgba(80, 65, 35, 0.18);
     z-index: 1000;
     transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     white-space: nowrap;
@@ -983,8 +983,8 @@ header {
 footer {
     padding: 40px 40px 24px;
     background-color: var(--bg-footer);
-    color: var(--text-secondary);
-    border-top: 1px solid var(--border-color);
+    color: #bcd0b2;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
     position: relative;
     z-index: 1;
 }
@@ -1007,13 +1007,13 @@ footer {
 .footer-title {
     font-size: 1.1em;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 4px;
 }
 
 .footer-tagline {
     font-size: 0.82em;
-    color: var(--text-secondary);
+    color: #a9c2a0;
 }
 
 .footer-links {
@@ -1024,13 +1024,13 @@ footer {
 }
 
 .footer-links a {
-    color: var(--text-secondary);
+    color: #bcd0b2;
     text-decoration: none;
     font-size: 0.85em;
     transition: color 0.3s;
 }
 
-.footer-links a:hover { color: var(--accent); }
+.footer-links a:hover { color: #ffffff; }
 
 .footer-bottom {
     text-align: center;
@@ -1039,8 +1039,8 @@ footer {
 .footer-bottom p {
     font-size: 0.8em;
     margin: 4px 0;
-    color: var(--text-secondary);
-    opacity: 0.7;
+    color: #9bb290;
+    opacity: 1;
 }
 
 .footer-link {
@@ -1239,8 +1239,8 @@ footer {
     left: 0;
     right: 0;
     z-index: 9999;
-    background: rgba(26, 16, 8, 0.97);
-    border-top: 1px solid var(--border-color);
+    background: rgba(47, 74, 51, 0.97);
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
     padding: 16px 24px;
     display: flex;
     justify-content: center;
@@ -1267,7 +1267,7 @@ footer {
 }
 .cookie-text p {
     font-size: 0.82rem;
-    color: var(--text-secondary);
+    color: #c3d6ba;
     margin: 0;
     line-height: 1.5;
 }
@@ -1300,14 +1300,14 @@ footer {
 }
 .cookie-btn-more {
     background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
+    color: #cfdcc6;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     display: inline-block;
     line-height: 1;
 }
 .cookie-btn-more:hover {
-    color: var(--text-primary);
-    border-color: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent-light);
 }
 @media (max-width: 600px) {
     .cookie-banner-inner {
@@ -1340,7 +1340,7 @@ footer {
 
 .ranking-week {
     font-size: 0.9em;
-    color: var(--accent-light);
+    color: var(--accent-dark);
     font-weight: 700;
     margin-bottom: 1.4em;
 }
@@ -1348,8 +1348,8 @@ footer {
 .btn-ranking {
     margin-top: 10px;
     width: 100%;
-    background: linear-gradient(135deg, #F5A623, #E8621C);
-    color: #fff;
+    background: linear-gradient(135deg, #EBA655, #DC8A38);
+    color: #412905;
     font-size: 1.05em;
 }
 .btn-ranking:hover { transform: translateY(-3px) scale(1.02); }
@@ -1383,7 +1383,7 @@ footer {
     transition: all 0.25s;
 }
 .ranking-tab.active {
-    background: linear-gradient(135deg, #E8621C, #C0392B);
+    background: linear-gradient(135deg, #5E9159, #3E6B4A);
     color: #fff;
 }
 .ranking-board[data-cat="modern"] ~ .ranking-tabs .ranking-tab,
@@ -1477,7 +1477,7 @@ footer {
     color: var(--text-secondary);
     font-weight: 300;
 }
-.ranking-hint strong { color: var(--accent-light); }
+.ranking-hint strong { color: var(--accent-dark); }
 
 /* ── 랭킹 등록 모달 ── */
 .ranking-modal {
@@ -1540,7 +1540,7 @@ footer {
 .ranking-modal-category {
     font-weight: 900;
     font-size: 1.1em;
-    color: var(--accent-light);
+    color: var(--accent-dark);
     margin-bottom: 18px;
 }
 
@@ -1668,9 +1668,9 @@ footer {
     cursor: pointer;
     padding: 0;
     overflow: hidden;
-    background: linear-gradient(145deg, #3a2a18, #241809);
+    background: linear-gradient(145deg, #7a5a38, #4f3a22);
     border: 2px solid var(--accent-light);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 22px rgba(60, 45, 25, 0.32);
     opacity: 0;
     transform: translateX(0) rotate(0deg);
     transition: transform 0.55s cubic-bezier(.2,.8,.3,1), opacity 0.4s, box-shadow 0.25s;
@@ -1729,7 +1729,7 @@ footer {
     border: 3px solid var(--accent-light);
     box-shadow: 0 16px 48px var(--accent-glow);
     margin-bottom: 20px;
-    background: linear-gradient(160deg, #2C2418, #1A1008);
+    background: linear-gradient(160deg, #6b4f32, #4a3622);
 }
 
 .tarot-card-reveal.flip-in {
@@ -1763,7 +1763,7 @@ footer {
 .tarot-card-name {
     font-size: 1.6em;
     font-weight: 900;
-    color: var(--accent-light);
+    color: var(--accent-dark);
     margin-bottom: 6px;
 }
 .tarot-card-keywords {
@@ -1778,7 +1778,7 @@ footer {
     font-size: 1em;
     line-height: 1.8;
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 18px 22px;

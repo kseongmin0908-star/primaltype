@@ -25,32 +25,39 @@
     <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. 원시력 테스트 홈페이지로 돌아가서 AI 원시인 지수 분석을 시작해보세요.">
     <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://primal-type.com/">
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px 16px; border-radius: 3px; }
-      #message h3 { color: #888; font-weight: normal; font-size: 16px; margin: 16px 0 12px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;line-height:1.7;color:#2A3320;
+        background:
+          radial-gradient(1000px 500px at 85% -10%,rgba(94,145,89,.12),transparent 60%),
+          radial-gradient(800px 460px at -10% 8%,rgba(191,224,239,.22),transparent 55%),
+          #F7F3EA;}
+      .card{background:#fff;max-width:380px;width:100%;padding:34px 28px 28px;border-radius:24px;border:1px solid #ece5d5;box-shadow:0 18px 50px rgba(80,65,35,.12)}
+      .mascot{width:120px;height:auto;margin:0 auto 4px;filter:drop-shadow(0 8px 14px rgba(18,28,14,.3))}
+      .code{font-size:13px;font-weight:800;letter-spacing:.18em;color:#5E9159;margin-bottom:6px}
+      h1{font-size:20px;font-weight:800;color:#2A3320;margin-bottom:10px}
+      p{font-size:14px;color:#4f4a3b;margin-bottom:22px}
+      .home-btn{display:inline-block;background:linear-gradient(135deg,#EBA655,#DC8A38);color:#412905;font-weight:800;font-size:15px;text-decoration:none;padding:14px 28px;border-radius:14px;box-shadow:0 10px 24px rgba(170,110,35,.4);transition:transform .15s}
+      .home-btn:hover{transform:translateY(-2px)}
+      .links{margin-top:18px;font-size:13px}
+      .links a{color:#3E6B4A;font-weight:600;text-decoration:none;margin:0 9px}
+      .links a:hover{text-decoration:underline}
     </style>
   </head>
   <body>
-    <main>
-      <div id="message">
-        <h2>404</h2>
-        <h1>페이지를 찾을 수 없습니다</h1>
-        <p>요청하신 페이지가 존재하지 않거나 이동되었습니다. URL을 다시 확인해 주세요.</p>
-        <a href="/">원시력 테스트 홈으로 돌아가기</a>
-      </div>
+    <main class="card">
+      <img src="/img/mascot.png?v=2" class="mascot" alt="원시인 마스코트">
+      <div class="code">404</div>
+      <h1>길을 잃은 원시인이…</h1>
+      <p>요청하신 페이지가 사라졌거나 다른 곳으로 옮겨졌어요. 동굴(홈)로 돌아가 다시 시작해볼까요?</p>
+      <a href="/" class="home-btn">🦣 홈으로 돌아가기</a>
+      <nav class="links">
+        <a href="/test">테스트</a><a href="/magazine">읽을거리</a><a href="/about">소개</a>
+      </nav>
     </main>
-      <script defer src="/bgm.js"></script>
-</body>
+    <script defer src="/bgm.js"></script>
+  </body>
 </html>

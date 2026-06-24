@@ -154,51 +154,42 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css?v=20260602">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css?v=20260603">
     <!-- 주간 랭킹 API 설정 (홈에서는 랭킹 표시용으로만 사용) -->
     <script defer src="config.js"></script>
 </head>
 <body>
-    <div class="bg-deco" aria-hidden="true">
-        <span class="float-emoji e1">🦴</span>
-        <span class="float-emoji e2">🪨</span>
-        <span class="float-emoji e3">🔥</span>
-        <span class="float-emoji e4">🪵</span>
-        <span class="float-emoji e5">🍖</span>
-        <span class="float-emoji e6">🦣</span>
-    </div>
-
-    <header role="banner">
-        <div class="header-inner">
-            <div class="logo">
-                <span class="logo-emoji" aria-hidden="true">🦣</span>
-                <h1>원시력 테스트</h1>
-                <span class="logo-emoji" aria-hidden="true">🧑‍💻</span>
-            </div>
-            <nav class="main-nav" aria-label="메인 네비게이션">
-                <a href="/test" target="_blank" rel="noopener">테스트 하기</a>
-                <a href="#ranking">주간 랭킹</a>
-                <a href="/tarot" target="_blank" rel="noopener">원시인 타로</a>
+    <header class="hero" role="banner">
+        <nav class="hero-nav" aria-label="메인 네비게이션">
+            <a href="/" class="logo"><span aria-hidden="true">🦣</span><h1>원시력 테스트</h1></a>
+            <div class="nav-links">
+                <a href="/test" target="_blank" rel="noopener">테스트</a>
+                <a href="#ranking">랭킹</a>
+                <a href="/tarot" target="_blank" rel="noopener">타로</a>
                 <a href="/magazine">읽을거리</a>
                 <a href="#about">소개</a>
-            </nav>
+            </div>
+        </nav>
+        <div class="hero-top">
+            <span class="hero-badge">🌿 AI 원시인 판별 · 무료</span>
+            <h2 class="hero-title">셀카 한 장으로 하는<br><span class="y">'나는 몇 퍼센트 원시인?'</span></h2>
+            <p class="hero-sub">숲을 누비던 조상의 흔적, 내 얼굴엔 몇 % 남아 있을까?</p>
+        </div>
+        <div class="hero-bottom">
+            <div class="hero-steps" aria-label="진행 단계">
+                <span class="hero-step">🪨 사진 업로드</span>
+                <span class="hero-step-sep">›</span>
+                <span class="hero-step">🔥 AI 분석</span>
+                <span class="hero-step-sep">›</span>
+                <span class="hero-step">🦴 결과 확인</span>
+            </div>
+            <img src="img/mascot.png?v=2" class="hero-mascot" alt="원시인 마스코트" width="152" height="152">
+            <a href="/test" target="_blank" rel="noopener" class="hero-cta">📷 사진 올리고 시작하기</a>
         </div>
     </header>
 
     <main>
-        <section id="hero" aria-label="소개 배너">
-            <div class="hero-content">
-                <h2>셀카 한 장으로 하는<br>'나는 몇 퍼센트 원시인?' 테스트</h2>
-                <div class="hero-steps" aria-label="진행 단계">
-                    <div class="hero-step"><span class="hero-step-icon">🪨</span>사진 업로드</div>
-                    <span class="hero-step-sep">›</span>
-                    <div class="hero-step"><span class="hero-step-icon">🔥</span>AI 분석</div>
-                    <span class="hero-step-sep">›</span>
-                    <div class="hero-step"><span class="hero-step-icon">🦴</span>결과 확인</div>
-                </div>
-                <a href="/test" target="_blank" rel="noopener" class="hero-cta btn">📷 사진 올리고 시작하기</a>
-            </div>
-        </section>
 
         <section id="about">
             <div class="about-content">
