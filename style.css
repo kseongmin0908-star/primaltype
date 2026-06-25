@@ -1782,8 +1782,37 @@ footer {
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 18px 22px;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
 }
+
+/* ── 정/역방향 배지 ── */
+.tarot-orientation {
+    display: inline-block;
+    font-size: 0.78em;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+.tarot-orientation.upright { background: rgba(94, 145, 89, 0.16); color: #3E6B4A; border: 1px solid rgba(94, 145, 89, 0.4); }
+.tarot-orientation.reversed { background: rgba(216, 119, 46, 0.14); color: var(--accent-dark); border: 1px solid rgba(216, 119, 46, 0.4); }
+
+/* ── 역방향: 카드 180° 회전 ── */
+.tarot-card-face.reversed { transform: rotate(180deg); }
+
+/* ── 오늘의 한마디 (실천 팁) ── */
+.tarot-card-tip {
+    max-width: 460px;
+    margin: 0 auto 22px;
+    background: rgba(94, 145, 89, 0.10);
+    border: 1px solid rgba(94, 145, 89, 0.28);
+    border-radius: 12px;
+    padding: 12px 18px;
+    text-align: left;
+}
+.tarot-card-tip .tip-label { display: block; font-weight: 800; color: #3E6B4A; font-size: 0.82em; margin-bottom: 3px; }
+.tarot-card-tip .tip-text { color: var(--text-primary); font-size: 0.95em; line-height: 1.6; }
 
 @media (max-width: 768px) {
     #tarot { padding: 50px 16px; }

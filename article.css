@@ -249,6 +249,8 @@ a.info-card:hover {
 .tcard .tc-name { font-size: 1.1rem; font-weight: 800; color: var(--text); }
 .tcard .tc-kw { font-size: 0.82rem; color: var(--green); font-weight: 600; margin-bottom: 8px; }
 .tcard .tc-text { font-size: 0.92rem; color: var(--text-2); margin: 0; line-height: 1.7; }
+.tcard .tc-text + .tc-text { margin-top: 8px; }
+.tcard .tc-text strong { color: var(--green); font-weight: 800; margin-right: 3px; }
 
 /* ── Disclaimer ── */
 .disclaimer-box {
