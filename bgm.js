@@ -21,7 +21,7 @@
   // ----- 설정값 -----
   // 페이지별 다른 음원: bgm.js 로드 전에 window.__ptBgmSrc 를 지정 (예: 타로 페이지)
   var SRC = (window.__ptBgmSrc || '/bgm.mp3');   // ← 음원 파일 경로
-  var VOLUME = 0.45;                    // 0.0 ~ 1.0 (배경음이라 약간 작게)
+  var VOLUME = (typeof window.__ptBgmVol === 'number') ? window.__ptBgmVol : 0.2;  // 기본 20% (페이지별 window.__ptBgmVol 로 조정, 예: 타로 0.45)
   var K_ON = 'pt_bgm_enabled';          // localStorage: '1' 켜짐 / '0' 꺼짐 (전 페이지 공통)
   var K_T  = window.__ptBgmSrc ? 'pt_bgm_time_' + window.__ptBgmSrc : 'pt_bgm_time';  // 트랙별 재생 위치(초)
   var SAVE_EVERY = 3;                   // 재생 위치 저장 주기(초)
