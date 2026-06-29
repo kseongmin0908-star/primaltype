@@ -45,6 +45,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="style.css?v=20260625">
+    <link rel="stylesheet" href="tarot.css?v=20260626">
 </head>
 <body>
     <div class="bg-deco" aria-hidden="true">
@@ -78,8 +79,8 @@
             <p class="section-snippet">동굴 주술사가 당신의 오늘을 점쳐드립니다. 마음을 비우고 카드 한 장을 골라보세요.</p>
 
             <div class="tarot-intro">
-                <img class="tarot-webtoon" src="tarot/intro.png" alt="원시인 주술사" onerror="this.style.display='none'">
-                <div class="tarot-shaman-fallback" aria-hidden="true">🧙‍♂️🦣</div>
+                <img class="tarot-webtoon" src="img/tarot-shaman.jpg" alt="신비로운 동굴 주술사" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="tarot-shaman-fallback" aria-hidden="true" style="display:none;">🧙‍♂️🦣</div>
             </div>
 
             <div id="tarot-stage" class="tarot-stage">
